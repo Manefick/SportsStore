@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using SportsStore.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace SportsStore
 {
@@ -32,7 +34,18 @@ namespace SportsStore
             app.UseDeveloperExceptionPage();
             app.UseStatusCodePages();
             app.UseStaticFiles();
+            app.UseDefaultFiles();
+            app.UseFileServer(new FileServerOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(env.ContentRootPath, "node_modules")
+                ),
+                RequestPath = "/node_modules",
+                EnableDirectoryBrowsing = false
+            });
             app.UseMvc(routes => {
+                routes.MapRoute(
+                    name: "pagination", template: "Products/Page{productPage}", defaults: new { Controller = "Product", action = "List" });
                 routes.MapRoute(name: "default", template: "{controller=Product}/{action=List}/{id?}");
             });
             SeedData.EnsurePopulated(app);
