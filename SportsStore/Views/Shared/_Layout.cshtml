@@ -1,13 +1,21 @@
 ﻿<!DOCTYPE html>
+
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <link href="/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet"
+          href="\node_modules\bootstrap\dist\css\bootstrap.min.css" />
+    <link rel="stylesheet" href="\node_modules\fontawesome\*"/>
     <title>SportsStore</title>
 </head>
 <body>
     <div class="navbar navbar-inverse bg-inverse" role="navigation">
-        <a class="navbar-brand" href="#">SPORTS STORE</a>
+        <div class="row">
+            <a class="col navbar-brand" href="#">SPORTS STORE</a>
+            <div class="col-4 text-right">
+                @await Component.InvokeAsync("CartSummary")
+            </div>
+        </div>
     </div>
     <div class="row m-1 p-1">
         <div id="categories" class="col-3">
