@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
@@ -32,6 +33,16 @@ namespace SportsStore.Models
                 }
             }
             context.SaveChanges();
+        }
+        public Product DeleteProduct(int productID)
+        {
+            Product dbEntry = context.Products.FirstOrDefault(p => p.ProductID == productID);
+            if (dbEntry != null)
+            {
+                context.Products.Remove(dbEntry);
+                context.SaveChanges();
+            }
+            return dbEntry;
         }
     }
 }

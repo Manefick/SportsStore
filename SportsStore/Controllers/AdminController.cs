@@ -36,5 +36,16 @@ namespace SportsStore.Controllers
                 return View(product);
             }
         }
+        public ViewResult Create(Product product) => View("Edit", new Product());
+        [HttpPost]
+        public IActionResult Delete(int productId)
+        {
+            Product deleteProduct = repository.DeleteProduct(productId);
+            if (deleteProduct != null)
+            {
+                TempData["message"] = $"{deleteProduct.Name} was deleted";
+            }
+            return RedirectToAction("Index");
+        }
     }
 }
