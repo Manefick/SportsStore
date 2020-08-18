@@ -38,6 +38,12 @@ namespace SportsStore.Controllers
                 return View(product);
             }
         }
+        [HttpPost]
+        public IActionResult SeedDataBase()
+        {
+            SeedData.EnsurePopulated(HttpContext.RequestServices);
+            return RedirectToAction(nameof(Index));
+        }
         public ViewResult Create(Product product) => View("Edit", new Product());
         [HttpPost]
         public IActionResult Delete(int productId)
